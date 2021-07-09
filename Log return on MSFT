@@ -1,0 +1,21 @@
+#numpy is one of the libraries support muti-dimentional array and metrics
+import numpy as np
+import yfinance as yf
+import matplotlib
+
+#pull data from yahoo finance
+msft=yf.download('msft',start='2018-01-01',end='2020-12-30')
+print(msft)
+#calculate log return
+msft_logreturn= np.log(msft['Adj Close']/msft['Adj Close'].shift(1))
+print(msft_logreturn)
+#plot graph to see the movement of return
+msftlogreturn_graph=msft_logreturn.plot(figsize=(8,5))
+msftlogreturn_graph.set_title('Log Return of MSFT in 2018-2020')
+msftlogreturn_graph.set_ylabel('Return%')
+#calculate average return perday 
+msftlogreturn_d= msft_logreturn.mean()
+print('Average log return per day=',msftlogreturn_d)
+#But in reality we have 250 trading day 
+msftlogreturn_y=msft_logreturn.mean()*250
+print('Average log return per year=',msftlogreturn_y)
