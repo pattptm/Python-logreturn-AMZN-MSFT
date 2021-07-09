@@ -1,0 +1,21 @@
+#numpy is one of the libraries support muti-dimentional array and metrics
+import numpy as np
+import yfinance as yf
+import matplotlib
+
+#pull data from yahoo finance
+amzn=yf.download('amzn',start='2018-01-01',end='2020-12-30')
+print(amzn)
+#calculate log return
+amzn_logreturn= np.log(amzn['Adj Close']/amzn['Adj Close'].shift(1))
+print(amzn_logreturn)
+#plot graph to see the movement of return
+amznlogreturn_graph=amzn_logreturn.plot(figsize=(8,5))
+amznlogreturn_graph.set_title('Log Return of AMZN in 2018-2020')
+amznlogreturn_graph.set_ylabel('Return%')
+#calculate average return perday 
+amznlogreturn_d= amzn_logreturn.mean()
+print('Average log return per day=',amznlogreturn_d)
+#But in reality we have 250 trading day 
+amznlogreturn_y=amzn_logreturn.mean()*250
+print('Average log return per year=',amznlogreturn_y)
